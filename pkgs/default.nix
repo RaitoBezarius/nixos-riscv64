@@ -22,6 +22,7 @@ final: prev: rec {
 
     # StarFive VisionFive
     sd-image-visionfive = final.callPackage ./sd-image-visionfive { };
+    sd-image-visionfive2 = final.callPackage ./sd-image-visionfive2 { };
 
     linux_visionfive = final.callPackage ./linux-visionfive {
       kernelPatches = with final.kernelPatches; [

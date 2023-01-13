@@ -22,6 +22,7 @@
     nixosModules = {
       unmatched = import ./nixos/unmatched.nix;
       visionfive = import ./nixos/visionfive.nix;
+      visionfive2 = import ./nixos/visionfive2.nix;
     };
   };
 }
