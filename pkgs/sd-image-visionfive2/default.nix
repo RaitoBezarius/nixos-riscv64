@@ -11,9 +11,10 @@ let
 
   config = { lib, pkgs, modulesPath, config, ... }: {
     imports = [
-      ./sd-image-riscv64-visionfive.nix
-      ../../nixos/visionfive.nix
+      ./sd-image-riscv64-visionfive2.nix
+      ../../nixos/visionfive2.nix
     ];
+    nixpkgs.crossSystem.system = "riscv64-linux";
 
     sdImage.imageName = "nixos-sd-image-visionfive2";
 

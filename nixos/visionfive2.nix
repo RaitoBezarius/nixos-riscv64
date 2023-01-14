@@ -1,10 +1,11 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   nixpkgs.overlays = [
     (import ../pkgs)
   ];
 
   hardware.deviceTree.name = "starfive/jh7100-starfive-visionfive-v2.dtb";
 
+  boot.supportedFilesystems = lib.mkForce [ "btrfs" "vfat" "ext4" ];
   boot.loader.grub.enable = false;
   boot.loader.generic-extlinux-compatible.enable = true;
 
