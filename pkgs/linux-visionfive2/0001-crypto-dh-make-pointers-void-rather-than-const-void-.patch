@@ -1,0 +1,32 @@
+From 18b317a7590f4796b9b8f41a42c833a0ee8329b9 Mon Sep 17 00:00:00 2001
+From: Raito Bezarius <masterancpp@gmail.com>
+Date: Tue, 31 Jan 2023 23:28:39 +0100
+Subject: [PATCH] crypto/dh: make pointers void* rather than const void*,
+ breaking security/dh.c
+
+---
+ include/crypto/dh.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/include/crypto/dh.h b/include/crypto/dh.h
+index 4a68c670d421..c2f5a32586b0 100644
+--- a/include/crypto/dh.h
++++ b/include/crypto/dh.h
+@@ -32,10 +32,10 @@
+  * @g_size:	Size of DH generator G
+  */
+ struct dh {
+-	const void *key;
+-	const void *p;
+-	const void *q;
+-	const void *g;
++	void *key;
++	void *p;
++	void *q;
++	void *g;
+ 	unsigned int key_size;
+ 	unsigned int p_size;
+ 	unsigned int q_size;
+-- 
+2.38.1
+
