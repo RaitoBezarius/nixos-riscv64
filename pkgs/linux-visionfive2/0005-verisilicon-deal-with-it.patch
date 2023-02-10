@@ -1,0 +1,25 @@
+From af23dda0a899bf4d5c8344866c173cbb381b5820 Mon Sep 17 00:00:00 2001
+From: Raito Bezarius <masterancpp@gmail.com>
+Date: Fri, 10 Feb 2023 14:09:15 +0100
+Subject: [PATCH 5/7] verisilicon: deal with it
+
+---
+ drivers/gpu/drm/verisilicon/vs_simple_enc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/verisilicon/vs_simple_enc.c b/drivers/gpu/drm/verisilicon/vs_simple_enc.c
+index 11edc3c89adb..23d5c494892a 100755
+--- a/drivers/gpu/drm/verisilicon/vs_simple_enc.c
++++ b/drivers/gpu/drm/verisilicon/vs_simple_enc.c
+@@ -216,7 +216,7 @@ static int encoder_bind(struct device *dev, struct device *master, void *data)
+ 			drm_of_find_possible_crtcs(drm_dev, dev->of_node);
+ 	encoder->possible_crtcs = 2;
+ 
+-	ret = drm_of_find_panel_or_bridge(dev->of_node, 1, 0,&tmp_panel, &bridge);
++	ret = drm_of_find_panel_or_bridge(dev->of_node, 1, 0,&drm_panel, &bridge);
+ 	if (ret){
+ 		printk("no panel, %d\n",ret);
+ 		//dev_err_probe(dev, ret, "endpoint returns %d\n", ret);
+-- 
+2.39.1
+

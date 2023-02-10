@@ -8,18 +8,19 @@ buildLinux (args // {
     repo = "linux";
     rev = "JH7110_VisionFive2_upstream";
     # rev = "JH7110_VisionFive2_upstream";
-    sha256 = lib.fakeHash;
+    sha256 = "sha256-yjIgLlsuYjOPv52m7pftkeGkiwFAFugFgzFvWK3ZBpU=";
     # sha256 = "sha256-o1k1UDUXUsRb4200zZ5ozVL15g7wsheet8O5UhX2HWY=";
     # sha256 = "sha256-yjIgLlsuYjOPv52m7pftkeGkiwFAFugFgzFvWK3ZBpU=";
   };
 
   kernelPatches = [
-    { name = "crypto-dh"; patch = ./crypto-dh.patch; }
-    { name = "remove-rmd128"; patch = ./0001-crypto-remove-rmd128-as-it-is-not-here-anymore.patch; }
-    { name = "remove-rmd256-320-tgr192"; patch = ./0001-crypto-remove-rmd256-rmd320-tgr192-as-they-are-not-h.patch; }
-    { name = "remove-salsa20"; patch = ./0001-crypto-remove-salsa20-as-they-are-not-here-anymore.patch; }
-    { name = "gpu-drm-tda998x"; patch = ./gpu-drm-tda998x.patch; }
-    { name = "sound-soc-starfive"; patch = ./sound-soc-starfive.patch; }
+    { name = "crypto-dh"; patch = ./0001-security-keys-dh-dh_data_from_key-takes-const-void-d.patch; }
+    { name = "remove-ciphers"; patch = ./0002-crypto-remove-rmd128-as-it-is-not-here-anymore.patch; }
+    { name = "sound-soc-starfive"; patch = ./0003-sound-soc-starfive-remove-starfive_pwmdac_transmitte.patch; }
+    { name = "gpu-drm-tda998x"; patch = ./0004-drivers-gpu-drm-i2c-tda998x_pin-use-proper-device-ta.patch; }
+    { name = "verisilicon"; patch = ./0005-verisilicon-deal-with-it.patch; }
+    { name = "media-starfive"; patch = ./0006-media-starfive-kill-some-modules.patch; }
+    { name = "wireless-cleanup"; patch = ./0007-wireless-clean-up-SHELL-according-to-POSIX.patch; }
   ];
 
   defconfig = "starfive_visionfive2_defconfig";

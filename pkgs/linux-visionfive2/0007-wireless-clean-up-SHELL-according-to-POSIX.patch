@@ -1,0 +1,33 @@
+From aa3f01dc1c93540b520202b35c796eb8b3ed33fd Mon Sep 17 00:00:00 2001
+From: Raito Bezarius <masterancpp@gmail.com>
+Date: Fri, 10 Feb 2023 14:09:43 +0100
+Subject: [PATCH 7/7] wireless: clean up SHELL according to POSIX
+
+---
+ drivers/net/wireless/eswin/compile_test.sh | 2 +-
+ drivers/staging/r8188eu/Makefile           | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/net/wireless/eswin/compile_test.sh b/drivers/net/wireless/eswin/compile_test.sh
+index faa142f88c60..6026e5d8f8d0 100644
+--- a/drivers/net/wireless/eswin/compile_test.sh
++++ b/drivers/net/wireless/eswin/compile_test.sh
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/usr/bin/env bash
+ 
+ linux_dir=/net/rwlab-srv1/nx_share/linux
+ ARCH=${ARCH:-x86}
+diff --git a/drivers/staging/r8188eu/Makefile b/drivers/staging/r8188eu/Makefile
+index aebaf29990fd..8f48ec8ef9c4 100644
+--- a/drivers/staging/r8188eu/Makefile
++++ b/drivers/staging/r8188eu/Makefile
+@@ -1,4 +1,4 @@
+-SHELL := /bin/bash
++SHELL := /usr/bin/env bash
+ EXTRA_CFLAGS += $(USER_EXTRA_CFLAGS)
+ EXTRA_CFLAGS += -O1
+ 
+-- 
+2.39.1
+

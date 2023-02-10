@@ -1,7 +1,18 @@
-diff -u b/crypto/Kconfig b/crypto/Kconfig
---- b/crypto/Kconfig
+From 3486a01f551391414d34ed59a772b124aaa77d08 Mon Sep 17 00:00:00 2001
+From: Raito Bezarius <masterancpp@gmail.com>
+Date: Wed, 1 Feb 2023 03:48:56 +0100
+Subject: [PATCH 2/7] crypto: remove rmd128 as it is not here anymore
+
+---
+ crypto/Kconfig  | 62 -------------------------------------------------
+ crypto/Makefile |  5 ----
+ 2 files changed, 67 deletions(-)
+
+diff --git a/crypto/Kconfig b/crypto/Kconfig
+index 3f745dfe888f..5e2890ca74ce 100644
+--- a/crypto/Kconfig
 +++ b/crypto/Kconfig
-@@ -822,19 +822,6 @@
+@@ -822,19 +822,6 @@ config CRYPTO_MICHAEL_MIC
  	  should not be used for other purposes because of the weakness
  	  of the algorithm.
  
@@ -21,7 +32,7 @@ diff -u b/crypto/Kconfig b/crypto/Kconfig
  config CRYPTO_RMD160
  	tristate "RIPEMD-160 digest algorithm"
  	select CRYPTO_HASH
-@@ -852,30 +839,6 @@
+@@ -852,30 +839,6 @@ config CRYPTO_RMD160
  	  Developed by Hans Dobbertin, Antoon Bosselaers and Bart Preneel.
  	  See <https://homes.esat.kuleuven.be/~bosselae/ripemd160.html>
  
@@ -52,7 +63,7 @@ diff -u b/crypto/Kconfig b/crypto/Kconfig
  config CRYPTO_SHA1
  	tristate "SHA1 digest algorithm"
  	select CRYPTO_HASH
-@@ -1051,19 +1014,6 @@
+@@ -1051,19 +1014,6 @@ config CRYPTO_STREEBOG
  	  https://tc26.ru/upload/iblock/fed/feddbb4d26b685903faa2ba11aea43f6.pdf
  	  https://tools.ietf.org/html/rfc6986
  
@@ -72,10 +83,30 @@ diff -u b/crypto/Kconfig b/crypto/Kconfig
  config CRYPTO_WP512
  	tristate "Whirlpool digest algorithms"
  	select CRYPTO_HASH
-diff -u b/crypto/Makefile b/crypto/Makefile
---- b/crypto/Makefile
+@@ -1454,18 +1404,6 @@ config CRYPTO_KHAZAD
+ 	  See also:
+ 	  <http://www.larc.usp.br/~pbarreto/KhazadPage.html>
+ 
+-config CRYPTO_SALSA20
+-	tristate "Salsa20 stream cipher algorithm"
+-	select CRYPTO_SKCIPHER
+-	help
+-	  Salsa20 stream cipher algorithm.
+-
+-	  Salsa20 is a stream cipher submitted to eSTREAM, the ECRYPT
+-	  Stream Cipher Project. See <https://www.ecrypt.eu.org/stream/>
+-
+-	  The Salsa20 stream cipher algorithm is designed by Daniel J.
+-	  Bernstein <djb@cr.yp.to>. See <https://cr.yp.to/snuffle.html>
+-
+ config CRYPTO_CHACHA20
+ 	tristate "ChaCha stream cipher algorithms"
+ 	select CRYPTO_LIB_CHACHA_GENERIC
+diff --git a/crypto/Makefile b/crypto/Makefile
+index ceac90861da8..624fb42bbf2c 100644
+--- a/crypto/Makefile
 +++ b/crypto/Makefile
-@@ -72,10 +72,7 @@
+@@ -72,10 +72,7 @@ obj-$(CONFIG_CRYPTO_XCBC) += xcbc.o
  obj-$(CONFIG_CRYPTO_NULL2) += crypto_null.o
  obj-$(CONFIG_CRYPTO_MD4) += md4.o
  obj-$(CONFIG_CRYPTO_MD5) += md5.o
@@ -86,7 +117,7 @@ diff -u b/crypto/Makefile b/crypto/Makefile
  obj-$(CONFIG_CRYPTO_SHA1) += sha1_generic.o
  obj-$(CONFIG_CRYPTO_SHA256) += sha256_generic.o
  obj-$(CONFIG_CRYPTO_SHA512) += sha512_generic.o
-@@ -84,7 +81,6 @@
+@@ -84,7 +81,6 @@ obj-$(CONFIG_CRYPTO_SM3) += sm3_generic.o
  obj-$(CONFIG_CRYPTO_STREEBOG) += streebog_generic.o
  obj-$(CONFIG_CRYPTO_WP512) += wp512.o
  CFLAGS_wp512.o := $(call cc-option,-fno-schedule-insns)  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=79149
@@ -94,3 +125,14 @@ diff -u b/crypto/Makefile b/crypto/Makefile
  obj-$(CONFIG_CRYPTO_BLAKE2B) += blake2b_generic.o
  obj-$(CONFIG_CRYPTO_BLAKE2S) += blake2s_generic.o
  obj-$(CONFIG_CRYPTO_GF128MUL) += gf128mul.o
+@@ -146,7 +142,6 @@ obj-$(CONFIG_CRYPTO_TEA) += tea.o
+ obj-$(CONFIG_CRYPTO_KHAZAD) += khazad.o
+ obj-$(CONFIG_CRYPTO_ANUBIS) += anubis.o
+ obj-$(CONFIG_CRYPTO_SEED) += seed.o
+-obj-$(CONFIG_CRYPTO_SALSA20) += salsa20_generic.o
+ obj-$(CONFIG_CRYPTO_CHACHA20) += chacha_generic.o
+ obj-$(CONFIG_CRYPTO_POLY1305) += poly1305_generic.o
+ obj-$(CONFIG_CRYPTO_DEFLATE) += deflate.o
+-- 
+2.39.1
+
