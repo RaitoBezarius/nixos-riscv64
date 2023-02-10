@@ -1,4 +1,4 @@
-From af23dda0a899bf4d5c8344866c173cbb381b5820 Mon Sep 17 00:00:00 2001
+From 3bebcfa489cfc9cef1e58e56d13780762db179fa Mon Sep 17 00:00:00 2001
 From: Raito Bezarius <masterancpp@gmail.com>
 Date: Fri, 10 Feb 2023 14:09:15 +0100
 Subject: [PATCH 5/7] verisilicon: deal with it

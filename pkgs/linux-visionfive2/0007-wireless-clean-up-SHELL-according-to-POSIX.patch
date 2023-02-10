@@ -1,4 +1,4 @@
-From aa3f01dc1c93540b520202b35c796eb8b3ed33fd Mon Sep 17 00:00:00 2001
+From 7717e29e5a9dcba22054f50c829ae5f33bcf90f7 Mon Sep 17 00:00:00 2001
 From: Raito Bezarius <masterancpp@gmail.com>
 Date: Fri, 10 Feb 2023 14:09:43 +0100
 Subject: [PATCH 7/7] wireless: clean up SHELL according to POSIX

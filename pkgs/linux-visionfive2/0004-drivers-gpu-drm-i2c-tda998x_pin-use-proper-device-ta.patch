@@ -1,4 +1,4 @@
-From d35256834c177c0cec825f269c0d74fd06cdeb0d Mon Sep 17 00:00:00 2001
+From 306752e06a3ba4b934a671877e87909bc97cf7d8 Mon Sep 17 00:00:00 2001
 From: Raito Bezarius <masterancpp@gmail.com>
 Date: Wed, 1 Feb 2023 04:10:36 +0100
 Subject: [PATCH 4/7] drivers/gpu/drm/i2c/tda998x_pin: use proper device table

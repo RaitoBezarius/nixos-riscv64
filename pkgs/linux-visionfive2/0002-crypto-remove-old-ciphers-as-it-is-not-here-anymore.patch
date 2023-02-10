@@ -1,15 +1,15 @@
-From 3486a01f551391414d34ed59a772b124aaa77d08 Mon Sep 17 00:00:00 2001
+From 5c39e0238ec2d4fc031833ac9ea38367c2d8fc9e Mon Sep 17 00:00:00 2001
 From: Raito Bezarius <masterancpp@gmail.com>
 Date: Wed, 1 Feb 2023 03:48:56 +0100
-Subject: [PATCH 2/7] crypto: remove rmd128 as it is not here anymore
+Subject: [PATCH 2/7] crypto: remove old ciphers as it is not here anymore
 
 ---
- crypto/Kconfig  | 62 -------------------------------------------------
- crypto/Makefile |  5 ----
- 2 files changed, 67 deletions(-)
+ crypto/Kconfig  | 87 -------------------------------------------------
+ crypto/Makefile |  6 ----
+ 2 files changed, 93 deletions(-)
 
 diff --git a/crypto/Kconfig b/crypto/Kconfig
-index 3f745dfe888f..5e2890ca74ce 100644
+index 3f745dfe888f..bd0d9d225cb5 100644
 --- a/crypto/Kconfig
 +++ b/crypto/Kconfig
 @@ -822,19 +822,6 @@ config CRYPTO_MICHAEL_MIC
@@ -102,8 +102,40 @@ index 3f745dfe888f..5e2890ca74ce 100644
  config CRYPTO_CHACHA20
  	tristate "ChaCha stream cipher algorithms"
  	select CRYPTO_LIB_CHACHA_GENERIC
+@@ -1606,31 +1544,6 @@ config CRYPTO_SERPENT_AVX2_X86_64
+ 	  See also:
+ 	  <https://www.cl.cam.ac.uk/~rja14/serpent.html>
+ 
+-config CRYPTO_SM4
+-	tristate "SM4 cipher algorithm"
+-	select CRYPTO_ALGAPI
+-	help
+-	  SM4 cipher algorithms (OSCCA GB/T 32907-2016).
+-
+-	  SM4 (GBT.32907-2016) is a cryptographic standard issued by the
+-	  Organization of State Commercial Administration of China (OSCCA)
+-	  as an authorized cryptographic algorithms for the use within China.
+-
+-	  SMS4 was originally created for use in protecting wireless
+-	  networks, and is mandated in the Chinese National Standard for
+-	  Wireless LAN WAPI (Wired Authentication and Privacy Infrastructure)
+-	  (GB.15629.11-2003).
+-
+-	  The latest SM4 standard (GBT.32907-2016) was proposed by OSCCA and
+-	  standardized through TC 260 of the Standardization Administration
+-	  of the People's Republic of China (SAC).
+-
+-	  The input, output, and key of SMS4 are each 128 bits.
+-
+-	  See also: <https://eprint.iacr.org/2008/329.pdf>
+-
+-	  If unsure, say N.
+-
+ config CRYPTO_TEA
+ 	tristate "TEA, XTEA and XETA cipher algorithms"
+ 	depends on CRYPTO_USER_API_ENABLE_OBSOLETE
 diff --git a/crypto/Makefile b/crypto/Makefile
-index ceac90861da8..624fb42bbf2c 100644
+index ceac90861da8..4bf793be13cb 100644
 --- a/crypto/Makefile
 +++ b/crypto/Makefile
 @@ -72,10 +72,7 @@ obj-$(CONFIG_CRYPTO_XCBC) += xcbc.o
@@ -125,7 +157,15 @@ index ceac90861da8..624fb42bbf2c 100644
  obj-$(CONFIG_CRYPTO_BLAKE2B) += blake2b_generic.o
  obj-$(CONFIG_CRYPTO_BLAKE2S) += blake2s_generic.o
  obj-$(CONFIG_CRYPTO_GF128MUL) += gf128mul.o
-@@ -146,7 +142,6 @@ obj-$(CONFIG_CRYPTO_TEA) += tea.o
+@@ -135,7 +131,6 @@ obj-$(CONFIG_CRYPTO_SERPENT) += serpent_generic.o
+ CFLAGS_serpent_generic.o := $(call cc-option,-fsched-pressure)  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=79149
+ obj-$(CONFIG_CRYPTO_AES) += aes_generic.o
+ CFLAGS_aes_generic.o := $(call cc-option,-fno-code-hoisting) # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=83356
+-obj-$(CONFIG_CRYPTO_SM4) += sm4_generic.o
+ obj-$(CONFIG_CRYPTO_AES_TI) += aes_ti.o
+ obj-$(CONFIG_CRYPTO_CAMELLIA) += camellia_generic.o
+ obj-$(CONFIG_CRYPTO_CAST_COMMON) += cast_common.o
+@@ -146,7 +141,6 @@ obj-$(CONFIG_CRYPTO_TEA) += tea.o
  obj-$(CONFIG_CRYPTO_KHAZAD) += khazad.o
  obj-$(CONFIG_CRYPTO_ANUBIS) += anubis.o
  obj-$(CONFIG_CRYPTO_SEED) += seed.o

@@ -1,4 +1,4 @@
-From 40231b8419cdeb4e2f73341bb39368fb302646b9 Mon Sep 17 00:00:00 2001
+From 6d118ed876e89180500984bb6dcaead0f7c6002f Mon Sep 17 00:00:00 2001
 From: Raito Bezarius <masterancpp@gmail.com>
 Date: Fri, 10 Feb 2023 14:09:30 +0100
 Subject: [PATCH 6/7] media/starfive: kill some modules

@@ -1,4 +1,4 @@
-From 83c831a6e0d2f7ff31d9389364d47cc3052834ac Mon Sep 17 00:00:00 2001
+From a9751428c99328fbf117786a358b5ae032eb28b8 Mon Sep 17 00:00:00 2001
 From: Raito Bezarius <masterancpp@gmail.com>
 Date: Wed, 1 Feb 2023 03:49:19 +0100
 Subject: [PATCH 3/7] sound/soc/starfive: remove starfive_pwmdac_transmitter
