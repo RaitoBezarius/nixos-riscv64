@@ -1,0 +1,49 @@
+From 10c57aa0116b5e8df29e73acb1dcc75ce24ae610 Mon Sep 17 00:00:00 2001
+From: Raito Bezarius <masterancpp@gmail.com>
+Date: Wed, 1 Feb 2023 03:48:56 +0100
+Subject: [PATCH] crypto: remove rmd128 as it is not here anymore
+
+---
+ crypto/Kconfig  | 13 -------------
+ crypto/Makefile |  1 -
+ 2 files changed, 14 deletions(-)
+
+diff --git a/crypto/Kconfig b/crypto/Kconfig
+index 3f745dfe888f..48c0b71cc8e4 100644
+--- a/crypto/Kconfig
++++ b/crypto/Kconfig
+@@ -822,19 +822,6 @@ config CRYPTO_MICHAEL_MIC
+ 	  should not be used for other purposes because of the weakness
+ 	  of the algorithm.
+ 
+-config CRYPTO_RMD128
+-	tristate "RIPEMD-128 digest algorithm"
+-	select CRYPTO_HASH
+-	help
+-	  RIPEMD-128 (ISO/IEC 10118-3:2004).
+-
+-	  RIPEMD-128 is a 128-bit cryptographic hash function. It should only
+-	  be used as a secure replacement for RIPEMD. For other use cases,
+-	  RIPEMD-160 should be used.
+-
+-	  Developed by Hans Dobbertin, Antoon Bosselaers and Bart Preneel.
+-	  See <https://homes.esat.kuleuven.be/~bosselae/ripemd160.html>
+-
+ config CRYPTO_RMD160
+ 	tristate "RIPEMD-160 digest algorithm"
+ 	select CRYPTO_HASH
+diff --git a/crypto/Makefile b/crypto/Makefile
+index ceac90861da8..74c3a8dcfca1 100644
+--- a/crypto/Makefile
++++ b/crypto/Makefile
+@@ -72,7 +72,6 @@ obj-$(CONFIG_CRYPTO_XCBC) += xcbc.o
+ obj-$(CONFIG_CRYPTO_NULL2) += crypto_null.o
+ obj-$(CONFIG_CRYPTO_MD4) += md4.o
+ obj-$(CONFIG_CRYPTO_MD5) += md5.o
+-obj-$(CONFIG_CRYPTO_RMD128) += rmd128.o
+ obj-$(CONFIG_CRYPTO_RMD160) += rmd160.o
+ obj-$(CONFIG_CRYPTO_RMD256) += rmd256.o
+ obj-$(CONFIG_CRYPTO_RMD320) += rmd320.o
+-- 
+2.39.0
+

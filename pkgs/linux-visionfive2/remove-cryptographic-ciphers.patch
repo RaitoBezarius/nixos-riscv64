@@ -1,0 +1,96 @@
+diff -u b/crypto/Kconfig b/crypto/Kconfig
+--- b/crypto/Kconfig
++++ b/crypto/Kconfig
+@@ -822,19 +822,6 @@
+ 	  should not be used for other purposes because of the weakness
+ 	  of the algorithm.
+ 
+-config CRYPTO_RMD128
+-	tristate "RIPEMD-128 digest algorithm"
+-	select CRYPTO_HASH
+-	help
+-	  RIPEMD-128 (ISO/IEC 10118-3:2004).
+-
+-	  RIPEMD-128 is a 128-bit cryptographic hash function. It should only
+-	  be used as a secure replacement for RIPEMD. For other use cases,
+-	  RIPEMD-160 should be used.
+-
+-	  Developed by Hans Dobbertin, Antoon Bosselaers and Bart Preneel.
+-	  See <https://homes.esat.kuleuven.be/~bosselae/ripemd160.html>
+-
+ config CRYPTO_RMD160
+ 	tristate "RIPEMD-160 digest algorithm"
+ 	select CRYPTO_HASH
+@@ -852,30 +839,6 @@
+ 	  Developed by Hans Dobbertin, Antoon Bosselaers and Bart Preneel.
+ 	  See <https://homes.esat.kuleuven.be/~bosselae/ripemd160.html>
+ 
+-config CRYPTO_RMD256
+-	tristate "RIPEMD-256 digest algorithm"
+-	select CRYPTO_HASH
+-	help
+-	  RIPEMD-256 is an optional extension of RIPEMD-128 with a
+-	  256 bit hash. It is intended for applications that require
+-	  longer hash-results, without needing a larger security level
+-	  (than RIPEMD-128).
+-
+-	  Developed by Hans Dobbertin, Antoon Bosselaers and Bart Preneel.
+-	  See <https://homes.esat.kuleuven.be/~bosselae/ripemd160.html>
+-
+-config CRYPTO_RMD320
+-	tristate "RIPEMD-320 digest algorithm"
+-	select CRYPTO_HASH
+-	help
+-	  RIPEMD-320 is an optional extension of RIPEMD-160 with a
+-	  320 bit hash. It is intended for applications that require
+-	  longer hash-results, without needing a larger security level
+-	  (than RIPEMD-160).
+-
+-	  Developed by Hans Dobbertin, Antoon Bosselaers and Bart Preneel.
+-	  See <https://homes.esat.kuleuven.be/~bosselae/ripemd160.html>
+-
+ config CRYPTO_SHA1
+ 	tristate "SHA1 digest algorithm"
+ 	select CRYPTO_HASH
+@@ -1051,19 +1014,6 @@
+ 	  https://tc26.ru/upload/iblock/fed/feddbb4d26b685903faa2ba11aea43f6.pdf
+ 	  https://tools.ietf.org/html/rfc6986
+ 
+-config CRYPTO_TGR192
+-	tristate "Tiger digest algorithms"
+-	select CRYPTO_HASH
+-	help
+-	  Tiger hash algorithm 192, 160 and 128-bit hashes
+-
+-	  Tiger is a hash function optimized for 64-bit processors while
+-	  still having decent performance on 32-bit processors.
+-	  Tiger was developed by Ross Anderson and Eli Biham.
+-
+-	  See also:
+-	  <https://www.cs.technion.ac.il/~biham/Reports/Tiger/>.
+-
+ config CRYPTO_WP512
+ 	tristate "Whirlpool digest algorithms"
+ 	select CRYPTO_HASH
+diff -u b/crypto/Makefile b/crypto/Makefile
+--- b/crypto/Makefile
++++ b/crypto/Makefile
+@@ -72,10 +72,7 @@
+ obj-$(CONFIG_CRYPTO_NULL2) += crypto_null.o
+ obj-$(CONFIG_CRYPTO_MD4) += md4.o
+ obj-$(CONFIG_CRYPTO_MD5) += md5.o
+-obj-$(CONFIG_CRYPTO_RMD128) += rmd128.o
+ obj-$(CONFIG_CRYPTO_RMD160) += rmd160.o
+-obj-$(CONFIG_CRYPTO_RMD256) += rmd256.o
+-obj-$(CONFIG_CRYPTO_RMD320) += rmd320.o
+ obj-$(CONFIG_CRYPTO_SHA1) += sha1_generic.o
+ obj-$(CONFIG_CRYPTO_SHA256) += sha256_generic.o
+ obj-$(CONFIG_CRYPTO_SHA512) += sha512_generic.o
+@@ -84,7 +81,6 @@
+ obj-$(CONFIG_CRYPTO_STREEBOG) += streebog_generic.o
+ obj-$(CONFIG_CRYPTO_WP512) += wp512.o
+ CFLAGS_wp512.o := $(call cc-option,-fno-schedule-insns)  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=79149
+-obj-$(CONFIG_CRYPTO_TGR192) += tgr192.o
+ obj-$(CONFIG_CRYPTO_BLAKE2B) += blake2b_generic.o
+ obj-$(CONFIG_CRYPTO_BLAKE2S) += blake2s_generic.o
+ obj-$(CONFIG_CRYPTO_GF128MUL) += gf128mul.o
