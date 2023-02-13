@@ -31,7 +31,7 @@ buildLinux (args // {
     DEBUG_INFO_BTF = lib.mkForce no;
     DEBUG_INFO_BTF_MODULES = lib.mkForce no;
     SND_SOC_WM8960 = no;
-    RTC_DRV_STARFIVE = no;
+    RTC_DRV_STARFIVE = yes;
     PL330_DMA = no;
     SPI_PL022 = no;
     SPI_PL022_STARFIVE = no;
@@ -39,6 +39,9 @@ buildLinux (args // {
     STARFIVE_INNO_HDMI = no;
     DRM_IMG_ROGUE = no;
     USB_WIFI_ECR6600U = no;
+    VIRTIO = module;
+    VIRTIO_PCI_LIB = module;
+    VIRTIO_PCI = module;
     # Required extra configuration
     SOC_STARFIVE = yes;
     CLK_STARFIVE_JH7110_SYS = yes;
