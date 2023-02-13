@@ -9,7 +9,7 @@ kernel_comp_size=0x10000000
 fdt_addr_r=0x88000000
 ramdisk_addr_r=0x88300000
 
-bootcmd=sysboot mmc 0:3 any 0x88100000 /boot/extlinux/extlinux.conf
+bootcmd=sysboot mmc 1:2 any 0x88100000 /boot/extlinux/extlinux.conf
 bootcmd_mmc0=devnum=0; run mmc_boot
 
 ipaddr=192.168.120.200

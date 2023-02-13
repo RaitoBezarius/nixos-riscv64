@@ -19,9 +19,13 @@
 
   sdImage = {
     populateFirmwareCommands = "";
+    populateBootCommands = ''
+      mkdir -p boot/boot
+      ${config.boot.loader.generic-extlinux-compatible.populateCmd} -c ${config.system.build.toplevel} -d boot/boot
+      cp ${./uEnv.txt} boot/boot/uEnv.txt
+    '';
     populateRootCommands = ''
       mkdir -p ./files/boot
-      ${config.boot.loader.generic-extlinux-compatible.populateCmd} -c ${config.system.build.toplevel} -d ./files/boot
       cp ${./uEnv.txt} ./files/boot/uEnv.txt
     '';
   };

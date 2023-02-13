@@ -30,7 +30,7 @@ in
 {
   imports = [
     (mkRemovedOptionModule [ "sdImage" "bootPartitionID" ] "The FAT partition for SD image now only holds the Raspberry Pi firmware files. Use firmwarePartitionID to configure that partition's ID.")
-    (mkRemovedOptionModule [ "sdImage" "bootSize" ] "The boot files for SD image have been moved to the main ext4 partition. The FAT partition now only holds the Raspberry Pi firmware files. Changing its size may not be required.")
+    # (mkRemovedOptionModule [ "sdImage" "bootSize" ] "The boot files for SD image have been moved to the main ext4 partition. The FAT partition now only holds the Raspberry Pi firmware files. Changing its size may not be required.")
     (modulesPath + "/profiles/all-hardware.nix")
   ];
 
@@ -108,6 +108,14 @@ in
       '';
     };
 
+    bootSize = mkOption {
+      type = types.int;
+      default = 100;
+      description = ''
+        Size of the /boot/firmware partition, in megabytes.
+      '';
+    };
+
     populateFirmwareCommands = mkOption {
       example = literalExpression "'' cp \${pkgs.myBootLoader}/u-boot.bin firmware/ ''";
       description = ''
@@ -116,6 +124,16 @@ in
         /boot/firmware partition on the SD image.
       '';
     };
+
+    populateBootCommands = mkOption {
+      example = literalExpression "''\${config.boot.loader.generic-extlinux-compatible.populateCmd} -c \${config.system.build.toplevel} -d ./files/boot''";
+      description = ''
+        Shell commands to populate the ./boot directory.
+        All files in that directory are copied to the
+        boot (/boot) partition on the SD image.
+      '';
+    };
+
 
     populateRootCommands = mkOption {
       example = literalExpression "''\${config.boot.loader.generic-extlinux-compatible.populateCmd} -c \${config.system.build.toplevel} -d ./files/boot''";
@@ -200,29 +218,27 @@ in
         # Create the image file sized to fit /boot/firmware and /, plus slack for the gap.
         rootSizeBlocks=$(du -B 512 --apparent-size ./root-fs.img | awk '{ print $1 }')
         firmwareSizeBlocks=$((${toString config.sdImage.firmwareSize} * 1024 * 1024 / 512))
-        imageSize=$((rootSizeBlocks * 512 + firmwareSizeBlocks * 512 + gap * 1024 * 1024))
+        bootSizeBlocks=$((${toString config.sdImage.bootSize} * 1024 * 1024 / 512))
+        imageSize=$((rootSizeBlocks * 512 + firmwareSizeBlocks * 512 + bootSizeBlocks * 512))
         truncate -s $imageSize $img
 
-        # type=b is 'W95 FAT32', type=83 is 'Linux'.
         # The "bootable" partition is where u-boot will look file for the bootloader
         # information (dtbs, extlinux.conf file).
         sfdisk $img <<EOF
-            label: dos
+            label: gpt
             label-id: ${config.sdImage.firmwarePartitionID}
 
-            size=1M, type=b
-            start=''${gap}M, size=$firmwareSizeBlocks, type=b
-            start=$((gap + ${toString config.sdImage.firmwareSize}))M, type=83, bootable
+            start=2048, size=32768, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=00D7AFD1-99DE-42BF-9A5F-2177370C9FDC
+            start=34816, size=${toString config.sdImage.bootSize}M, type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B, uuid=70E8FA63-F9FC-410B-8322-B0950C6D22FB
+            start=239616, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=AD8195B8-7BBF-784E-8058-59E0EAA8D087
         EOF
 
         # Copy the rootfs into the SD image
-        # VisionFive HACK: `--nr 2` -> `--nr 3`
         eval $(partx $img -o START,SECTORS --nr 3 --pairs)
         dd conv=notrunc if=./root-fs.img of=$img seek=$START count=$SECTORS
 
         # Create a FAT32 /boot/firmware partition of suitable size into firmware_part.img
-        # VisionFive HACK: `--nr 1` -> `--nr 2`
-        eval $(partx $img -o START,SECTORS --nr 2 --pairs)
+        eval $(partx $img -o START,SECTORS --nr 1 --pairs)
         truncate -s $((SECTORS * 512)) firmware_part.img
         faketime "1970-01-01 00:00:00" mkfs.vfat -i ${config.sdImage.firmwarePartitionID} -n ${config.sdImage.firmwarePartitionName} firmware_part.img
 
@@ -236,8 +252,20 @@ in
         fsck.vfat -vn firmware_part.img
         dd conv=notrunc if=firmware_part.img of=$img seek=$START count=$SECTORS
 
-        # VisionFive HACK: Delete the first dummy partition
-        sfdisk --delete $img 1
+        # Create a FAT32 /boot partition of suitable size into boot_part.img
+        eval $(partx $img -o START,SECTORS --nr 2 --pairs)
+        truncate -s $((SECTORS * 512)) boot_part.img
+        faketime "1970-01-01 00:00:00" mkfs.vfat -i ${config.sdImage.firmwarePartitionID} -n ${config.sdImage.firmwarePartitionName} boot_part.img
+
+        # Populate the files intended for /boot
+        mkdir boot
+        ${config.sdImage.populateBootCommands}
+
+        # Copy the populated /boot into the SD image
+        (cd boot; mcopy -psvm -i ../boot_part.img ./* ::)
+        # Verify the FAT partition before copying it.
+        fsck.vfat -vn boot_part.img
+        dd conv=notrunc if=boot_part.img of=$img seek=$START count=$SECTORS
 
         ${config.sdImage.postBuildCommands}
 
